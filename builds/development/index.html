@@ -14,26 +14,31 @@
 <script src="js/lib/underscore.js"></script>
 <script src="SampleData.js"></script>
 <script>
+    function getStudentInfo(elem, indx, list) {
+        var container = document.getElementById("container");
+        var student = "<p>" + elem.firstname + " " + elem.lastname + ", Avg.Score: " + elem.average_score + "</p>";
+        container.innerHTML = container.innerHTML + student;
+    }
     window.addEventListener("load", function (e) {
         var container = document.getElementById("container");
 
-        //given a student object, retrieve the object's keys
-        var keys = _.keys(students[0]);
-        container.innerHTML += "<p> the student object containes the keys: " + keys;
+        //extend each student object with a new property, their average score
+//        container.innerHTML += "<h2>Extending student objects with average_score</h2>";
+//        _.each(students, function (elem, indx, list) {
+//            avg = (elem.midterm_score + elem.final_score) / 2;
+//            _.extend(elem, {"average_score" : avg});
+//        });
+//        _.each(students, getStudentInfo);
+//        container.innerHTML += "<h2>Assigning default values to a new object</h2>";
+//        var defaultValues = {final_score: 0, midterm_score: 0, grade: 9};
+//        var newStudent = {firstname: "John", lastname: "Doe"};
+//        _.defaults(newStudent, defaultValues);
+//        container.innerHTML += "<p>" + newStudent.firstname + " " + newStudent.lastname + ", Midterm: " + newStudent.midterm_score + ", Final: " + newStudent.final_score + "</p>";
 
-        //now get the object's values
-        var values = _.values(students[0]);
-        container.innerHTML += "<p>The student object contains the values: " + values;
-
-        //use the pick() function to get just specific properties
-        var subsetStudent = _.pick(students[0], "lastname", "grade");
-        container.innerHTML += "<p> pick() on lastname, grade: " + subsetStudent.lastname + ", " + subsetStudent.grade;
-
-        //use the omit() function to filter out properties
-        var filteredStudent = _.omit(students[0], "midterm_score", "final_score");
-        container.innerHTML += "<p>omit() on midterm_score, final_score: ";
-        container.innerHTML += "<blockquote>" + _.keys(filteredStudent) + "</blockquote>";
-        container.innerHTML += "<blockquote>" + _.values(filteredStudent) + "</blockquote>";
+        //clone() makes a shallow-copy of the object (in other words, properties that are arrays or objects will be copied by reference, and not duplicated themselves)
+        container.innerHTML += "<h2>Cloning an existing object</h2>";
+        var copyStudent = _.clone(students[0]);
+        container.innerHTML += "<p>" + copyStudent.firstname + " " + copyStudent.lastname + ", Midterm: " + copyStudent.midterm_score + ", Final: " + copyStudent.final_score + "</p>";
     });
 </script>
 </body>
